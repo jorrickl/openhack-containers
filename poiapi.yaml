@@ -7,16 +7,16 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: userapi
+      app: poiapi
   template:
     metadata:
       labels:
-        app: userapi
+        app: poiapi
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
-      - name: userapi
+      - name: poiapi
         image: registryrmc7467.azurecr.io/poiapi:v1
         ports:
         - containerPort: 80
@@ -28,11 +28,17 @@ spec:
             secretKeyRef: 
               name: newsecret 
               key: sqluser 
-        - name: SQL_PASSWORD
-          valueFrom: 
-            secretKeyRef: 
-              name: newsecret 
-              key: sqlpassword 
+        volumeMounts:
+          - name: secrets-store01-inline
+            mountPath: "/secrets"
+            readOnly: true
+      volumes:
+      - name: secrets-store01-inline
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "azure-kvname-user-msi"
 ---
 apiVersion: v1
 kind: Service

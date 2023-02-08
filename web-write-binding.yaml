@@ -1,0 +1,12 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: web-write-binding
+  namespace: web
+roleRef:
+  apiGroup: ""
+  kind: Role
+  name: web-write
+subjects:
+- kind: Group
+  name: daaa8660-e9d4-4cab-9859-85302793e476

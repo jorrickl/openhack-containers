@@ -1,0 +1,14 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: web-read-binding
+  namespace: web
+roleRef:
+  apiGroup: ""
+  kind: Role
+  name: web-read
+subjects:
+- kind: Group
+  name: a3dc7877-3f58-4fcb-849b-f532bb54546b
+- kind: Group
+  name: daaa8660-e9d4-4cab-9859-85302793e476

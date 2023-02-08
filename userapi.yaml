@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userapi
+  namespace: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userapi
+  template:
+    metadata:
+      labels:
+        app: userapi
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: userapi
+        image: registryrmc7467.azurecr.io/userapi:v1
+        ports:
+        - containerPort: 80
+        env:
+        - name: SQL_SERVER
+          value: sqlserverrmc7467.database.windows.net
+        - name: SQL_USER
+          valueFrom: 
+            secretKeyRef: 
+              name: newsecret 
+              key: sqluser 
+        - name: SQL_PASSWORD
+          valueFrom: 
+            secretKeyRef: 
+              name: newsecret 
+              key: sqlpassword 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userapi
+  namespace: api
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: userapi

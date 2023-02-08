@@ -1,0 +1,12 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: api-write-binding
+  namespace: api
+roleRef:
+  apiGroup: ""
+  kind: Role
+  name: api-write
+subjects:
+- kind: Group
+  name: a3dc7877-3f58-4fcb-849b-f532bb54546b

@@ -35,7 +35,7 @@ spec:
         #       key: sqlpassword 
         volumeMounts:
           - name: secrets-store01-inline
-            mountPath: "/mnt/secrets"
+            mountPath: "/secrets"
             readOnly: true
       volumes:
       - name: secrets-store01-inline
